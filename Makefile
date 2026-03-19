@@ -19,4 +19,4 @@ install: install-frontend install-backend
 
 # Run both concurrently
 dev:
-	@(cd apps/frontend && yarn dev) & (cd apps/backend && source ../../ceo-backend/.venv/bin/activate && uvicorn app.main:app --reload --port 8000) & wait
+	@(cd apps/frontend && yarn dev) & (cd apps/backend && source .venv/bin/activate && uvicorn app.main:app --reload --port 8000) & wait

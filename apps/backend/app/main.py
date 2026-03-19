@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,8 +9,14 @@ from app.routers.api_router import api_router
 from app.scheduler import start_scheduler
 
 def create_app() -> FastAPI:
+    is_dev = os.getenv("ENVIRONMENT", "production") == "development"
 
-    app = FastAPI(title="CEO Dashboard API", docs_url=None, redoc_url=None, openapi_url=None)
+    app = FastAPI(
+        title="CEO Dashboard API",
+        docs_url="/docs" if is_dev else None,
+        redoc_url="/redoc" if is_dev else None,
+        openapi_url="/openapi.json" if is_dev else None,
+    )
 
     # Configure CORS
     app.add_middleware(
@@ -33,10 +40,13 @@ def create_app() -> FastAPI:
     # All routes defined in api_router (like /journal-entries) will be available
     app.include_router(api_router)
 
-    # Add root endpoint for basic health check (optional)
     @app.get("/")
     async def root():
         return {"message": "CEO Dashboard API is running"}
+
+    @app.get("/health")
+    async def health():
+        return {"status": "ok"}
 
     
     # Start the scheduler using FastAPI lifespan event handler
