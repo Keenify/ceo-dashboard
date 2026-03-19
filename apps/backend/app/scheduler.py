@@ -473,7 +473,10 @@ async def sync_feedback_to_taiga():
         logging.info("[Scheduler] Starting feedback sync to Taiga...")
         
         # Create Taiga sync service
-        sync_service = TaigaSyncService()
+        try:
+            sync_service = TaigaSyncService()
+        except ValueError:
+            return {"processed": 0, "succeeded": 0, "failed": 0, "errors": []}  # Taiga env vars not configured, skip silently
         
         # Process all pending feedback
         result = await sync_service.process_pending_feedback()
@@ -505,7 +508,10 @@ async def check_taiga_deleted_stories():
     """Check for deleted Taiga stories and clean up database (runs every 5 seconds)"""
     try:
         # Create Taiga sync service (with quiet logging)
-        sync_service = TaigaSyncService(quiet_mode=True)
+        try:
+            sync_service = TaigaSyncService(quiet_mode=True)
+        except ValueError:
+            return  # Taiga env vars not configured, skip silently
         
         # Check for deleted stories
         result = await sync_service.check_deleted_stories()
