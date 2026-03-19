@@ -9,7 +9,7 @@ from app.scheduler import start_scheduler
 
 def create_app() -> FastAPI:
 
-    app = FastAPI(title="CEO Dashboard API")
+    app = FastAPI(title="CEO Dashboard API", docs_url=None, redoc_url=None, openapi_url=None)
 
     # Configure CORS
     app.add_middleware(

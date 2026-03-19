@@ -1,5 +1,6 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 from datetime import date
@@ -13,8 +14,50 @@ from app.schemas.annual_calendar_plans import (
     AnnualCalendarPlanFilter,
     AnnualCalendarPlanColorUpdate
 )
+from app.service.annual_calendar_pdf_service import generate_annual_calendar_pdf
 
 router = APIRouter()
+
+# ================================
+# PDF EXPORT (must be before /{plan_id} to avoid path collision)
+# ================================
+
+@router.get("/export/pdf")
+async def export_annual_calendar_pdf(
+    user_id: UUID,
+    year: Optional[int] = Query(default=None),
+    db: AsyncSession = Depends(get_db),
+):
+    """Export the annual calendar as a landscape A4 PDF with coloured plan bars."""
+    from datetime import datetime as dt
+    resolved_year = year or dt.now().year
+
+    year_start = date(resolved_year, 1, 1)
+    year_end = date(resolved_year, 12, 31)
+
+    crud = CRUDAnnualCalendarPlan(db)
+    filter_params = AnnualCalendarPlanFilter(
+        user_id=user_id,
+        start_date_from=year_start,
+        end_date_to=year_end,
+    )
+    plans = await crud.get_multi_with_filter(filter_params=filter_params, skip=0, limit=1000)
+    plans_data = [AnnualCalendarPlan.model_validate(p).model_dump() for p in plans]
+
+    # Convert date objects to ISO strings for the PDF service
+    for p in plans_data:
+        if isinstance(p.get("start_date"), date):
+            p["start_date"] = p["start_date"].isoformat()
+        if isinstance(p.get("end_date"), date):
+            p["end_date"] = p["end_date"].isoformat()
+
+    pdf_buffer = generate_annual_calendar_pdf(plans_data, resolved_year)
+    filename = f"annual_calendar_{resolved_year}.pdf"
+    return StreamingResponse(
+        pdf_buffer,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'inline; filename="{filename}"'},
+    )
 
 # ================================
 # BASIC CRUD ENDPOINTS

@@ -169,11 +169,39 @@ export function useManifestation() {
     []
   );
 
+  const exportPDF = useCallback(
+    async (userId: string, category: string = "personal"): Promise<void> => {
+      const params = new URLSearchParams({ user_id: userId, category });
+      const url = `${backendApiDomain}/manifestation/export/pdf?${params.toString()}`;
+      try {
+        const response = await fetch(url, { method: 'GET' });
+        if (!response.ok) {
+          throw new Error(`Failed to generate PDF: ${response.status}`);
+        }
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = objectUrl;
+        const disposition = response.headers.get('Content-Disposition') || '';
+        const match = disposition.match(/filename="([^"]+)"/);
+        a.download = match ? match[1] : `manifestation_${category}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(objectUrl);
+      } catch (err) {
+        throw err instanceof Error ? err : new Error('An unknown error occurred while exporting PDF');
+      }
+    },
+    []
+  );
+
   return {
     addManifestation,
     fetchManifestations,
     fetchManifestationById,
     updateManifestation,
+    exportPDF,
     loading,
     error,
   };

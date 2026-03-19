@@ -87,6 +87,12 @@ export default function AnnualCalendarPlansPage() {
     }
   };
 
+  const handleMovePlan = async (planId: string, newStartDate: string, newEndDate: string) => {
+    if (user?.id) {
+      await updatePlan(planId, { start_date: newStartDate, end_date: newEndDate });
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -98,14 +104,16 @@ export default function AnnualCalendarPlansPage() {
   return (
     <div className="p-2">
       <div className="bg-white shadow-sm rounded-lg p-2">
-        <AnnualCalendar 
-          year={selectedYear} 
+        <AnnualCalendar
+          year={selectedYear}
           plans={plans}
           onDateClick={handleDateClick}
           onYearChange={handleYearChange}
           onPlanClick={handlePlanClick}
           onDragCreatePlan={handleDragCreatePlan}
           onUpdateColor={handleUpdateColor}
+          onPlanMove={handleMovePlan}
+          userId={user?.id}
         />
       </div>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { format, startOfYear, addMonths, eachDayOfInterval, endOfMonth, startOfMonth, getDaysInMonth, differenceInDays, addDays, parseISO, isSameDay } from 'date-fns';
 import { AnnualCalendarPlan, AllowedColor } from '@/app/annual_calendar_plans/types';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import ColorUpdateModal from './ColorUpdateModal';
@@ -14,6 +14,8 @@ interface AnnualCalendarProps {
   onPlanClick?: (plan: AnnualCalendarPlan) => void;
   onDragCreatePlan?: (startDate: string, endDate: string) => void;
   onUpdateColor?: (planId: string, color: AllowedColor) => Promise<void>;
+  onPlanMove?: (planId: string, newStartDate: string, newEndDate: string) => void;
+  userId?: string;
 }
 
 interface PlanSpan {
@@ -39,7 +41,7 @@ const getColorClasses = (color: string) => {
   return colorMap[color] || colorMap.blue; // fallback to blue
 };
 
-const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDateClick, onYearChange, onPlanClick, onDragCreatePlan, onUpdateColor }) => {
+const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDateClick, onYearChange, onPlanClick, onDragCreatePlan, onUpdateColor, onPlanMove, userId }) => {
   const currentYear = new Date().getFullYear();
   const minYear = currentYear - 2;
   const maxYear = currentYear + 2;
@@ -49,11 +51,16 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   
-  // Drag state management
+  // Drag-to-create state management
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartDate, setDragStartDate] = useState<Date | null>(null);
   const [dragEndDate, setDragEndDate] = useState<Date | null>(null);
   const [dragPreview, setDragPreview] = useState<{start: Date, end: Date} | null>(null);
+
+  // Drag-to-move state management
+  const [movingPlan, setMovingPlan] = useState<AnnualCalendarPlan | null>(null);
+  const [moveGrabDate, setMoveGrabDate] = useState<Date | null>(null);
+  const [moveHoverDate, setMoveHoverDate] = useState<Date | null>(null);
   
   // Color update modal state
   const [colorUpdateModalOpen, setColorUpdateModalOpen] = useState(false);
@@ -218,10 +225,26 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
     return endIndex > startIndex;
   };
 
-  // Helper function to check if a date is within drag selection
+  // Helper function to check if a date is within drag-to-create selection
   const isDateInDragSelection = (date: Date) => {
     if (!dragPreview) return false;
     return date >= dragPreview.start && date <= dragPreview.end;
+  };
+
+  // Helper to calculate the move preview date range
+  const getMovePreviewDates = () => {
+    if (!movingPlan || !moveGrabDate || !moveHoverDate) return null;
+    const dayOffset = differenceInDays(moveHoverDate, moveGrabDate);
+    const newStart = addDays(parseISO(movingPlan.start_date), dayOffset);
+    const newEnd = addDays(parseISO(movingPlan.end_date), dayOffset);
+    return { newStart, newEnd };
+  };
+
+  // Helper to check if a date falls in the move preview range
+  const isMovePreviewDate = (date: Date) => {
+    const preview = getMovePreviewDates();
+    if (!preview) return false;
+    return date >= preview.newStart && date <= preview.newEnd;
   };
 
   // Helper function to measure actual text width
@@ -359,7 +382,19 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
     setSelectedPlanForColor(null);
   };
 
-  // Drag event handlers
+  // Plan move drag handler — initiated from a plan bar
+  const handlePlanMoveStart = (e: React.MouseEvent, plan: AnnualCalendarPlan) => {
+    e.preventDefault();
+    e.stopPropagation(); // prevent date cell's mousedown from firing
+    const dayOffsetWithinPlan = Math.max(0, Math.floor(e.nativeEvent.offsetX / cellWidth));
+    const planStart = parseISO(plan.start_date);
+    const grabDate = addDays(planStart, dayOffsetWithinPlan);
+    setMovingPlan(plan);
+    setMoveGrabDate(grabDate);
+    setMoveHoverDate(grabDate);
+  };
+
+  // Drag-to-create event handlers
   const handleMouseDown = (e: React.MouseEvent, date: Date) => {
     e.preventDefault();
     setIsDragging(true);
@@ -369,7 +404,9 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
   };
 
   const handleMouseEnter = (date: Date) => {
-    if (isDragging && dragStartDate) {
+    if (movingPlan) {
+      setMoveHoverDate(date);
+    } else if (isDragging && dragStartDate) {
       const start = dragStartDate < date ? dragStartDate : date;
       const end = dragStartDate < date ? date : dragStartDate;
       setDragEndDate(date);
@@ -378,7 +415,17 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
   };
 
   const handleMouseUp = () => {
-    if (isDragging && dragStartDate && dragEndDate && onDragCreatePlan) {
+    if (movingPlan && moveGrabDate && moveHoverDate && onPlanMove) {
+      const dayOffset = differenceInDays(moveHoverDate, moveGrabDate);
+      if (dayOffset !== 0) {
+        const newStart = addDays(parseISO(movingPlan.start_date), dayOffset);
+        const newEnd = addDays(parseISO(movingPlan.end_date), dayOffset);
+        onPlanMove(movingPlan.id, format(newStart, 'yyyy-MM-dd'), format(newEnd, 'yyyy-MM-dd'));
+      }
+      setMovingPlan(null);
+      setMoveGrabDate(null);
+      setMoveHoverDate(null);
+    } else if (isDragging && dragStartDate && dragEndDate && onDragCreatePlan) {
       const start = dragStartDate < dragEndDate ? dragStartDate : dragEndDate;
       const end = dragStartDate < dragEndDate ? dragEndDate : dragStartDate;
       onDragCreatePlan(format(start, 'yyyy-MM-dd'), format(end, 'yyyy-MM-dd'));
@@ -392,7 +439,7 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
   // Global mouse up handler to handle drag end anywhere
   useEffect(() => {
     const handleGlobalMouseUp = () => {
-      if (isDragging) {
+      if (isDragging || movingPlan) {
         handleMouseUp();
       }
     };
@@ -401,14 +448,34 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
     return () => {
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
-  }, [isDragging, dragStartDate, dragEndDate]);
+  }, [isDragging, dragStartDate, dragEndDate, movingPlan, moveGrabDate, moveHoverDate]);
+
+  // Escape key cancels a plan move
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && movingPlan) {
+        setMovingPlan(null);
+        setMoveGrabDate(null);
+        setMoveHoverDate(null);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [movingPlan]);
+
+  const handlePrintPdf = () => {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_DOMAIN || 'http://localhost:8000';
+    const url = `${backendUrl}/annual-calendar-plans/export/pdf?user_id=${userId}&year=${year}`;
+    window.open(url, '_blank');
+  };
 
   return (
     <div ref={containerRef} className="bg-white" style={{ minWidth: '800px' }}>
       {/* Hidden div for text measurements */}
       <div ref={measureRef} style={{ position: 'absolute', visibility: 'hidden' }} />
       {/* Header - Dynamic and Responsive */}
-      <div className="mb-8 flex items-center justify-center w-full">
+      <div className="mb-8 flex items-center justify-between w-full">
+        <div className="flex-1" />
         <div className="flex items-center gap-4 px-4">
           <Button
             variant="outline"
@@ -421,14 +488,14 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
               minHeight: `${Math.max(36, 40 * viewportScale)}px`
             }}
           >
-            <ChevronLeft 
+            <ChevronLeft
               className={`${cellWidth >= 35 ? 'h-5 w-5' : 'h-4 w-4'}`}
               style={{
                 fontSize: `${Math.max(16, 18 * viewportScale)}px`
               }}
             />
           </Button>
-          <div 
+          <div
             className="text-blue-800 border-2 border-blue-800 px-4 py-1 font-bold text-center flex-shrink-0"
             style={{
               fontSize: `${Math.max(28, 36 * viewportScale)}px`,
@@ -449,12 +516,23 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
               minHeight: `${Math.max(36, 40 * viewportScale)}px`
             }}
           >
-            <ChevronRight 
+            <ChevronRight
               className={`${cellWidth >= 35 ? 'h-5 w-5' : 'h-4 w-4'}`}
               style={{
                 fontSize: `${Math.max(16, 18 * viewportScale)}px`
               }}
             />
+          </Button>
+        </div>
+        <div className="flex-1 flex justify-end">
+          <Button
+            variant="outline"
+            onClick={handlePrintPdf}
+            className="flex items-center gap-2"
+            disabled={!userId}
+          >
+            <Printer className="h-4 w-4" />
+            Print PDF
           </Button>
         </div>
       </div>
@@ -564,8 +642,9 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
                       const dateStr = format(day, 'yyyy-MM-dd');
                       const isWeekend = dayIndex === 0 || dayIndex === 6;
                       const isInDragSelection = isDateInDragSelection(day);
-                      const isToday = year === new Date().getFullYear() && 
-                                     monthIndex === new Date().getMonth() && 
+                      const isInMovePreview = movingPlan ? isMovePreviewDate(day) : false;
+                      const isToday = year === new Date().getFullYear() &&
+                                     monthIndex === new Date().getMonth() &&
                                      parseInt(format(day, 'd')) === new Date().getDate();
 
                       return (
@@ -577,9 +656,10 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
                           className={`
                             text-center py-1 cursor-pointer relative select-none
                             ${dayIndex === 6 ? 'border-r border-gray-300' : ''}
-                            ${isToday ? 'bg-gradient-to-br from-blue-50 to-blue-100' : 
+                            ${isToday ? 'bg-gradient-to-br from-blue-50 to-blue-100' :
+                              isInMovePreview ? 'bg-green-100' :
                               isInDragSelection ? 'bg-blue-200' : 'hover:bg-gray-50'}
-                            ${isDragging ? 'cursor-crosshair' : ''}
+                            ${movingPlan ? 'cursor-grab' : isDragging ? 'cursor-crosshair' : ''}
                             transition-colors
                           `}
                           style={{
@@ -661,10 +741,12 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
                       <div
                         onClick={(e) => handlePlanClick(e, span.plan)}
                         onContextMenu={(e) => handlePlanColorClick(e, span.plan)}
+                        onMouseDown={(e) => handlePlanMoveStart(e, span.plan)}
                         className={`
-                          absolute pointer-events-auto cursor-pointer
+                          absolute pointer-events-auto cursor-grab
                           ${colorClasses.bg} ${colorClasses.hover} transition-colors
                           border-2 ${colorClasses.border} rounded-md
+                          ${movingPlan?.id === span.plan.id ? 'opacity-40' : ''}
                         `}
                         style={{
                           height: `${Math.max(20, 24 * viewportScale)}px`,
@@ -673,7 +755,7 @@ const AnnualCalendar: React.FC<AnnualCalendarProps> = ({ year, plans = [], onDat
                           width: `${spanWidth * cellWidth}px`,
                           zIndex: 30
                         }}
-                        title={`${span.plan.title} (Right-click to change color)`}
+                        title={`${span.plan.title} (Drag to move · Right-click to change color)`}
                       />
                       
                       {/* Text overlay */}

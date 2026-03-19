@@ -25,6 +25,7 @@ export const ManifestationSection: React.FC<ManifestationSectionProps> = ({
     addManifestation,
     fetchManifestations,
     updateManifestation,
+    exportPDF,
     loading,
     error,
   } = useManifestation();
@@ -230,8 +231,12 @@ export const ManifestationSection: React.FC<ManifestationSectionProps> = ({
   };
 
   // Download PDF function
-  const handleDownloadPDF = () => {
-    window.print();
+  const handleDownloadPDF = async () => {
+    try {
+      await exportPDF(userId);
+    } catch (err) {
+      toast.error("Failed to download PDF. Please try again.");
+    }
   };
 
   // Toggle completion status for Big 5 targets

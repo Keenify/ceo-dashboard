@@ -9,7 +9,7 @@ install-frontend:
 
 # Backend
 dev-backend:
-	cd apps/backend && source .venv/bin/activate && uvicorn app.main:app --reload --port 8000
+	cd apps/backend && source ../../ceo-backend/.venv/bin/activate && uvicorn app.main:app --reload --port 8000
 
 install-backend:
 	cd apps/backend && pip install -r requirements.txt
@@ -17,7 +17,6 @@ install-backend:
 # Install all
 install: install-frontend install-backend
 
-# Run both (requires two terminals or use: make dev-frontend & make dev-backend)
+# Run both concurrently
 dev:
-	@echo "Start frontend: make dev-frontend"
-	@echo "Start backend:  make dev-backend"
+	@(cd apps/frontend && yarn dev) & (cd apps/backend && source ../../ceo-backend/.venv/bin/activate && uvicorn app.main:app --reload --port 8000) & wait

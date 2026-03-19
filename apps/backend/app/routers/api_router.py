@@ -26,8 +26,6 @@ from app.api import user_settings
 from app.api import stripe
 # Import the user_modules router
 from app.api import user_modules
-# Import the planka_onboarding router
-from app.api import planka_onboarding
 # Import the ai_journaling router
 from app.api import ai_journaling
 # Import the mindmaps router
@@ -116,9 +114,6 @@ api_router.include_router(stripe.router, prefix="/stripe", tags=["Stripe"])
 
 # Include the user_modules router
 api_router.include_router(user_modules.router, prefix="/user-modules", tags=["User Modules"])
-
-# Include the planka_onboarding router
-api_router.include_router(planka_onboarding.router, prefix="/planka", tags=["Planka Onboarding"])
 
 # Include the ai_journaling router
 api_router.include_router(ai_journaling.router, prefix="/ai-journaling", tags=["AI Journaling"])
