@@ -1,0 +1,705 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+
+    /* Current time highlight colors */
+    --current-day-highlight: 47 95% 90%;
+    --current-time-highlight: 47 95% 90%;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Current time highlight colors in dark mode */
+    --current-day-highlight: 47 70% 15%;
+    --current-time-highlight: 47 70% 15%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow: hidden; /* Prevent outer page scrollbar */
+  }
+}
+
+/* Modern yellow accent color in dark mode */
+.dark .bg-amber-500\/20 {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+/*rgba(244, 164, 26, 0.1)les for dark mode */
+.dark .form-checkbox {
+  @apply border-gray-500 bg-gray-700;
+}
+
+.dark .form-checkbox:checked {
+  @apply bg-blue-500 border-blue-500;
+}
+
+.dark .form-checkbox:focus {
+  @apply ring-2 ring-blue-400 ring-opacity-50;
+}
+
+/* Current day and time highlighting */
+.current-day-col {
+  background-color: hsl(var(--current-day-highlight));
+}
+
+.current-time-row td {
+  background-color: hsl(var(--current-time-highlight));
+}
+
+.dark .current-day-col {
+  background-color: hsl(var(--current-day-highlight));
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+.dark .current-time-row td {
+  background-color: hsl(var(--current-time-highlight));
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Intersection of current day and time */
+.current-time-row .current-day-col {
+  background-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+.dark .current-time-row .current-day-col {
+  background-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Custom styles for react-datepicker */
+.react-datepicker {
+  @apply font-sans border-border bg-card text-foreground shadow-md rounded-md !important;
+}
+
+.react-datepicker__header {
+  @apply bg-muted border-border !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  @apply text-foreground !important;
+}
+
+.react-datepicker__day {
+  @apply text-foreground hover:bg-accent hover:text-accent-foreground rounded-md !important;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-primary/20 text-foreground hover:bg-primary/30 !important;
+}
+
+.react-datepicker__navigation {
+  @apply top-2 !important;
+}
+
+.react-datepicker__navigation--previous {
+  @apply left-2 !important;
+}
+
+.react-datepicker__navigation--next {
+  @apply right-2 !important;
+}
+
+.react-datepicker__day--outside-month {
+  @apply text-muted-foreground !important;
+}
+
+.calendar-container .react-datepicker {
+  @apply w-full !important;
+}
+
+.calendar-container .react-datepicker__month-container {
+  @apply w-full !important;
+}
+
+.calendar-container .react-datepicker__month {
+  @apply p-2 !important;
+}
+
+.calendar-container .react-datepicker__day-names,
+.calendar-container .react-datepicker__week {
+  @apply flex justify-around !important;
+}
+
+.calendar-container .react-datepicker__day-name,
+.calendar-container .react-datepicker__day {
+  @apply flex items-center justify-center w-8 h-8 m-0 !important;
+}
+
+.grid-cols-21 {
+  grid-template-columns: repeat(21, minmax(0, 1fr));
+}
+
+/* Hide scrollbar utility for all browsers */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Webkit */
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* Print styles for better PDF generation */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  /* Force four containers to display in single row in print - override all responsive classes */
+  .manifestation-bottom-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+  }
+  
+  /* Completely override responsive grid behavior for all screen sizes in print */
+  .grid-cols-1,
+  .md\\:grid-cols-2,
+  .lg\\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  
+  /* Target the specific manifestation grid directly with high specificity */
+  .manifestation-bottom-grid.grid-cols-1,
+  .manifestation-bottom-grid.md\\:grid-cols-2,
+  .manifestation-bottom-grid.lg\\:grid-cols-4,
+  .manifestation-bottom-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    display: grid !important;
+  }
+  
+  /* Extremely specific override for manifestation section */
+  div.manifestation-bottom-grid,
+  .space-y-8 .manifestation-bottom-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: 1fr !important;
+  }
+  
+  /* Force arrows to align perfectly with the 4-column layout */
+  .manifestation-arrows {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 1rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: -1rem !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+  
+  .manifestation-arrows .arrow-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  /* Ensure cards have minimum height for consistency */
+  .manifestation-bottom-grid > div {
+    min-height: 180px !important;
+  }
+}
+
+/* AI Journal Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* AI Journal Chat Styles */
+.ai-journal-message {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* AI Journal Streaming Text Animation */
+.streaming-cursor {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ========== IKIGAI PRINT STYLES ========== */
+
+@media print {
+  /* 🎯 IKIGAI PRINT STYLES - Complete PDF customization */
+  .ikigai-print-container {
+    page-break-inside: avoid;
+    margin: 0;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 🎯 DIAGRAM CONTAINER SCALE - Adjust this value to resize entire diagram */
+    transform: scale(0.75);
+    transform-origin: center;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  /* Hide all scrollbars completely */
+  .ikigai-print-container * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  
+  .ikigai-print-container *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  
+  /* 🎯 TEXT FIELD CONTAINERS - Clean integrated appearance */
+  .ikigai-print-text-field {
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    overflow: visible !important;
+    border-radius: 0px !important;
+    text-align: center !important;
+    position: absolute !important;
+    z-index: 20 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    gap: 0px !important;
+  }
+  
+  .ikigai-print-text-field input,
+  .ikigai-print-text-field textarea {
+    font-size: 14px !important;
+    line-height: 1.1 !important;
+    color: #000 !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+    background: transparent !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    text-align: left !important;
+  }
+  
+  .ikigai-print-text-field input {
+    font-size: 14px !important;
+    padding: 0px !important;
+    margin: -20px 0px 0px 0px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: 100% !important;
+    outline: none !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+    height: auto !important;
+  }
+  
+  .ikigai-print-text-field textarea {
+    font-size: 12px !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #000 !important;
+    resize: none !important;
+    text-align: left !important;
+    width: 100% !important;
+    outline: none !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+    height: auto !important;
+    min-height: 20px !important;
+  }
+  
+  /* Individual textarea margin adjustments for each container */
+  /* 1st: Love (160px wide) */
+  .ikigai-print-text-field:nth-child(1) textarea {
+    margin: 0px 0px 0px -72px !important;
+  }
+  
+  /* 2nd: Good At (140px wide) */
+  .ikigai-print-text-field:nth-child(2) textarea {
+    margin: 0px 0px 0px -61px !important;
+  }
+  
+  /* 3rd: World Needs (140px wide) */
+  .ikigai-print-text-field:nth-child(3) textarea {
+    margin: 0px 0px 0px -61px !important;
+  }
+  
+  /* 4th: Paid For (160px wide) */
+  .ikigai-print-text-field:nth-child(4) textarea {
+    margin: 0px 0px 0px -72px !important;
+  }
+  
+  /* 5th: Passion (100px wide) */
+  .ikigai-print-text-field:nth-child(5) textarea {
+    margin: 0px 0px 0px -45px !important;
+  }
+  
+  /* 6th: Mission (100px wide, now left-positioned) */
+  .ikigai-print-text-field:nth-child(6) textarea {
+    margin: 0px 0px 0px -45px !important;
+  }
+  
+  /* 7th: Profession (100px wide) */
+  .ikigai-print-text-field:nth-child(7) textarea {
+    margin: 0px 0px 0px -45px !important;
+  }
+  
+  /* 8th: Vocation (100px wide, now left-positioned) */
+  .ikigai-print-text-field:nth-child(8) textarea {
+    margin: 0px 0px 0px -45px !important;
+  }
+  
+  /* 9th: Ikigai (80px wide) */
+  .ikigai-print-text-field:nth-child(9) textarea {
+    margin: 0px 0px 0px -2px !important;
+  }
+  
+  .ikigai-print-text-field textarea::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  
+  .ikigai-print-text-field .ikigai-print-region-label {
+    font-size: 12px !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    padding: 0px !important;
+    margin: 0px 0px -2px 0px !important;
+    line-height: 0.8 !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    overflow: visible !important;
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 1px !important;
+  }
+  
+  /* 🎯 INDIVIDUAL CONTAINER SIZES - Adjust each text field container */
+  
+  /* 1st: Love (What You Love) - Top */
+  .ikigai-print-text-field:nth-child(1) {
+    top: -3% !important;
+    left: 41% !important;
+    width: 160px !important;
+    min-width: 160px !important;
+    max-width: 200px !important;
+    height: 80px !important;
+    min-height: 80px !important;
+    max-height: 100px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+
+  /* 2nd: Good At (What You're Good At) - Left */
+  .ikigai-print-text-field:nth-child(2) {
+    top: 40% !important;
+    left: 19% !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 160px !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 80px !important;
+  }
+
+  /* 3rd: World Needs (What the World Needs) - Right */
+  .ikigai-print-text-field:nth-child(3) {
+    top: 40% !important;
+    left: 67% !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 160px !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 80px !important;
+  }
+
+  /* 4th: Paid For (What You Can Be Paid For) - Bottom */
+  .ikigai-print-text-field:nth-child(4) {
+    top: 85% !important;
+    left: 42% !important;
+    width: 160px !important;
+    min-width: 160px !important;
+    max-width: 180px !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 80px !important;
+  }
+
+  /* 5th: Passion (Love + Good At) */
+  .ikigai-print-text-field:nth-child(5) {
+    top: 20% !important;
+    left: 32% !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 120px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 60px !important;
+  }
+
+  /* 6th: Mission (Love + World Needs) */
+  .ikigai-print-text-field:nth-child(6) {
+    top: 20% !important;
+    left: 55% !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 120px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 60px !important;
+  }
+
+  /* 7th: Profession (Good At + Paid For) */
+  .ikigai-print-text-field:nth-child(7) {
+    top: 57% !important;
+    left: 33% !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 120px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 60px !important;
+  }
+
+  /* 8th: Vocation (World Needs + Paid For) */
+  .ikigai-print-text-field:nth-child(8) {
+    top: 57% !important;
+    left: 56% !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 120px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 60px !important;
+  }
+
+  /* 9th: Ikigai (Center) */
+  .ikigai-print-text-field:nth-child(9) {
+    left: 45% !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 100px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 50px !important;
+  }
+  
+  .ikigai-print-svg-container {
+    transform: rotate(45deg) !important;
+    transform-origin: center !important;
+    margin: 0 auto !important;
+    /* 🎯 SVG DIAGRAM SIZE - Adjust max-width/height to resize the core diagram */
+    max-width: 70% !important;
+    max-height: 70% !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  .ikigai-print-overlay-container {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    overflow: visible !important;
+    z-index: 10 !important;
+  }
+  
+  /* 🎯 DOTTED LINE DESCRIPTIONS - PDF-only adjustments */
+  .ikigai-print-description-text {
+    /* 🎯 DESCRIPTION TEXT SIZE - Adjust font-size for dotted line descriptions */
+    font-size: 16px !important;
+    color: #333 !important;
+    line-height: 1.2 !important;
+    font-weight: normal !important;
+    font-style: italic !important;
+  }
+  
+  .ikigai-print-description-container {
+    position: absolute;
+    width: 120px !important;
+    overflow: hidden !important;
+  }
+  
+  /* 🎯 SPECIFIC DESCRIPTION POSITIONING - Adjust individual descriptions */
+  
+  /* Top-right: "Delight and fullness but no wealth" */
+  .ikigai-print-description-container[style*="top: -8%"][style*="right: 10%"] {
+    top: -10% !important;
+    right: 16% !important;
+    width: 170px !important;
+  }
+  
+  /* Top-left: "Satisfaction but feeling of uselessness" */
+  .ikigai-print-description-container[style*="top: 20%"][style*="left: -11%"] {
+    top: 19% !important;
+    left: 2% !important;
+    width: 190px !important;
+  }
+  
+  /* Bottom-left: "Comfortable, but feeling of emptiness" */
+  .ikigai-print-description-container[style*="bottom: 5%"][style*="left: -2%"] {
+    bottom: 6% !important;
+    left: 10% !important;
+    width: 180px !important;
+  }
+  
+  /* Bottom-right: "Excitement and Complacency, but sense of uncertainty" */
+  .ikigai-print-description-container[style*="bottom: 6%"][style*="right: -2%"] {
+    bottom: 6% !important;
+    right: 10% !important;
+    width: 180px !important;
+  }
+  
+  /* Hide hover effects in print */
+  .ikigai-print-text-field:hover {
+    background: white !important;
+    box-shadow: none !important;
+  }
+  
+  /* Ensure SVG colors print correctly */
+  .ikigai-print-container svg path {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Make sure text is readable */
+  .ikigai-print-text-field * {
+    color: #000 !important;
+    background: transparent !important;
+    overflow: hidden !important;
+  }
+} 

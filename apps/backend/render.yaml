@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: ceo-dashboard-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: hypercorn app.main:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: MAILGUN_API_KEY
+        sync: false
+      - key: MAILGUN_DOMAIN
+        sync: false
+      - key: EMAIL_CONTENT_ENCRYPTION_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: TAIGA_USERNAME
+        sync: false
+      - key: TAIGA_PASSWORD
+        sync: false
+      - key: TAIGA_PROJECT_SLUG
+        sync: false
+      - key: TAIGA_API_URL
+        sync: false
+      - key: PLANKA_DATABASE_URL
+        sync: false
+      - key: PLANKA_ADMIN_EMAIL
+        sync: false
+      - key: PLANKA_ADMIN_PASSWORD
+        sync: false
+      - key: PLANKA_DEFAULT_USER_PASSWORD
+        sync: false

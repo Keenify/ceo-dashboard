@@ -1,0 +1,180 @@
+/* Google Maps custom styles */
+
+/* Map container */
+#map-container {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  transition: box-shadow 0.2s ease;
+}
+#map-container:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+#map-container div { will-change: transform; } /* Optimize animations */
+#map-container img { backface-visibility: hidden; } /* Reduce painting */
+
+/* Google Maps elements */
+.gm-style { font-family: inherit !important; }
+.gm-style > div { display: block !important; }
+.gm-style .gm-style-cc { display: inline-block !important; }
+.gm-style .gm-style-iw {
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 7px 1px rgba(0,0,0,0.1);
+}
+.gm-control-active {
+  border-radius: 50% !important;
+  background-color: white !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+}
+
+/* Info window */
+.info-window {
+  font-family: inherit;
+  padding: 4px;
+}
+.info-window h3 {
+  margin: 0 0 4px 0;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+.info-window p {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+}
+.info-window a {
+  display: inline-block;
+  margin-top: 6px;
+  color: #1E88E5;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.info-window a:hover {
+  color: #0D47A1;
+  text-decoration: underline;
+}
+
+/* Search container */
+#search-container .absolute { z-index: 1000; }
+#search-container .overflow-x-auto {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+#search-container .overflow-x-auto::-webkit-scrollbar { display: none; }
+#search-container button.whitespace-nowrap { transition: all 0.2s ease; }
+#search-container button.whitespace-nowrap:hover { transform: translateY(-1px); }
+
+/* Search input */
+#map-search-input {
+  width: 100%;
+  border-radius: 4px;
+  font-size: 15px;
+  transition: box-shadow 0.2s ease;
+}
+#map-search-input:focus { box-shadow: 0 0 0 2px rgba(30,136,229,0.25); }
+
+/* Map pins */
+.custom-pin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+}
+.pin-inner {
+  width: 20px;
+  height: 20px;
+  background-color: #1E88E5;
+  border: 2px solid #0D47A1;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.custom-pin:hover .pin-inner {
+  transform: scale(1.1);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+.pin-dropped {
+  background-color: #E53935;
+  border-color: #B71C1C;
+  transform: translateY(-5px);
+}
+.pin-dropped:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  margin-left: -2px;
+  width: 4px;
+  height: 6px;
+  background-color: #B71C1C;
+}
+
+/* Dark mode */
+.dark .info-window h3 { color: #f5f5f5; }
+.dark .info-window p { color: #aaa; }
+.dark .gm-style { --map-bg: #242526; --map-text: #fff; }
+.dark .pin-inner { background-color: #5E97F6; border-color: #7986CB; }
+.dark .pin-dropped { background-color: #F44336; border-color: #D32F2F; }
+.dark .pin-dropped:after { background-color: #D32F2F; }
+
+/* Google Maps place markers - make them more visible */
+.gm-style .gm-style-iw-c {
+  padding: 16px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+}
+
+/* Improve info window close button */
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important;
+  max-height: none !important;
+}
+
+.gm-style .gm-style-iw-t::after {
+  background: linear-gradient(45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 100%) !important;
+  box-shadow: -2px 2px 2px 0 rgba(178,178,178,.4) !important;
+}
+
+/* Improve clickable POIs */
+.gmnoprint {
+  cursor: pointer !important;
+}
+
+/* Highlight clickable map elements */
+.map-clickable-element {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.map-clickable-element:hover {
+  filter: brightness(1.2);
+}
+
+/* Info window links */
+.info-window a {
+  display: inline-block;
+  margin-top: 6px;
+  color: #1E88E5;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+  background-color: #f0f9ff;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+.info-window a:hover {
+  color: #0D47A1;
+  background-color: #e1f5fe;
+  text-decoration: underline;
+}
+
+/* Rating stars */
+.info-window .text-amber-600 {
+  display: flex;
+  align-items: center;
+} 

@@ -1,0 +1,16 @@
+.weekend-highlighted-cell {
+  position: relative;
+  overflow: hidden;
+}
+.weekend-highlighted-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #FEF9C3; /* Tailwind's yellow-50 */
+  z-index: 0;
+  pointer-events: none;
+}
+.weekend-highlighted-cell > * {
+  position: relative;
+  z-index: 1;
+}

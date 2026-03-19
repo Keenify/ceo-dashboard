@@ -1,0 +1,272 @@
+.react-flow__node-mindmap {
+  background: transparent;
+  border: none;
+}
+
+.react-flow__node-mindmap .inputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.react-flow__node-mindmap .inputWrapper:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="left"],
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="right"],
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="top"],
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="bottom"] {
+  cursor: crosshair;
+}
+
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="left"]:hover,
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="right"]:hover,
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="top"]:hover,
+.react-flow__node-mindmap .react-flow__handle[data-handlepos="bottom"]:hover {
+  cursor: crosshair;
+}
+
+.react-flow__node-mindmap .dragHandle {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab !important;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  position: relative;
+  z-index: 20;
+  pointer-events: all;
+  background: transparent;
+  margin: -4px;
+}
+
+.react-flow__node-mindmap .dragHandle:hover {
+  opacity: 1;
+}
+
+.react-flow__node-mindmap .dragHandle:active {
+  cursor: grabbing;
+}
+
+.react-flow__node-mindmap .dragHandle svg {
+  width: 12px;
+  height: 12px;
+}
+
+.react-flow__node-mindmap .input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  min-width: 60px;
+  padding: 0;
+  position: relative;
+  z-index: 10;
+  pointer-events: all;
+}
+
+.react-flow__node-mindmap .input::placeholder {
+  color: #9ca3af;
+}
+
+.react-flow__node-mindmap .deleteButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: #ef4444;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.react-flow__node-mindmap:hover .deleteButton {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.react-flow__node-mindmap .deleteButton:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  background: #F6AD55;
+  border: 2px solid white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.react-flow__node-mindmap:hover .react-flow__handle {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.react-flow__handle:hover {
+  opacity: 1 !important;
+  transform: scale(1.2) !important;
+  background: #ED8936;
+}
+
+.react-flow__handle-top {
+  top: -4px;
+}
+
+.react-flow__handle-bottom {
+  bottom: -4px;
+}
+
+.react-flow__handle-left {
+  left: -4px;
+}
+
+.react-flow__handle-right {
+  right: -4px;
+}
+
+/* Edge styling */
+.react-flow__edge-mindmap {
+  transition: all 0.2s ease;
+}
+
+.react-flow__edge-mindmap:hover path {
+  stroke: #ED8936 !important;
+  stroke-width: 4 !important;
+}
+
+.react-flow__edge-mindmap.selected path {
+  stroke: #3B82F6 !important;
+  stroke-width: 4 !important;
+  stroke-dasharray: 5,5 !important;
+  animation: dash 1s linear infinite;
+}
+
+/* Connection line styling */
+.react-flow__connection-line {
+  stroke: #f6ad55 !important;
+  stroke-width: 3px !important;
+  stroke-dasharray: 8,4 !important;
+  animation: dash 0.5s linear infinite;
+  opacity: 1 !important;
+  z-index: 1000 !important;
+}
+
+.react-flow__connection-line path {
+  stroke: #f6ad55 !important;
+  stroke-width: 3px !important;
+  stroke-dasharray: 8,4 !important;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Controls styling */
+.react-flow__controls {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.react-flow__controls-button {
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+  transition: background-color 0.2s ease;
+}
+
+.react-flow__controls-button:hover {
+  background: #f3f4f6;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none;
+}
+
+/* Panel styling */
+.react-flow__panel {
+  margin: 0;
+}
+
+.header {
+  background: transparent;
+  padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .react-flow__node-mindmap .inputWrapper {
+    padding: 4px 8px;
+  }
+  
+  .react-flow__node-mindmap .input {
+    font-size: 12px;
+  }
+  
+  .react-flow__node-mindmap .dragHandle {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .react-flow__node-mindmap .dragHandle svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Focus states */
+.react-flow__node-mindmap .input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+
+/* Selection styling */
+.react-flow__node-mindmap.selected .inputWrapper {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Animation for new nodes */
+@keyframes nodeAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.react-flow__node-mindmap {
+  animation: nodeAppear 0.3s ease;
+} 

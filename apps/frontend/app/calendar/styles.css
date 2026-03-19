@@ -1,0 +1,1104 @@
+/* Google Calendar styling */
+
+.calendar-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.calendar-wrapper {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+/* Header styling */
+.fc .fc-toolbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Event styling */
+.fc-event {
+  border-radius: 4px;
+  border: none;
+  padding: 2px 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.fc-event:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.fc-daygrid-event {
+  padding: 4px 6px;
+  margin-bottom: 2px;
+}
+
+/* Day grid styling */
+.fc-daygrid-day {
+  height: 8rem;
+}
+
+.fc-col-header-cell {
+  background-color: #f9fafb;
+  padding: 8px 0;
+}
+
+.fc-day-today {
+  background-color: rgba(66, 133, 244, 0.05) !important;
+}
+
+/* Time grid styling */
+.fc-timegrid-slot {
+  height: 2.5rem;
+}
+
+.fc-timegrid-now-indicator-line {
+  border-color: #f44336;
+}
+
+.fc-timegrid-now-indicator-arrow {
+  border-color: #f44336;
+}
+
+/* List view styling */
+.fc-list-day-cushion {
+  background-color: #f9fafb;
+}
+
+.fc-list-event:hover td {
+  background-color: rgba(66, 133, 244, 0.05);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .fc-toolbar-chunk {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .fc-daygrid-day {
+    height: 6rem;
+  }
+  
+  .fc-timegrid-slot {
+    height: 2rem;
+  }
+}
+
+/* Dark mode support */
+.dark .fc-col-header-cell {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .fc-list-day-cushion {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .fc-day-today {
+  background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+.dark .fc-list-event:hover td {
+  background-color: rgba(66, 133, 244, 0.1);
+}
+
+/* Custom Google Calendar source styling */
+.primary-calendar-events {
+  border-color: #4285F4;
+  background-color: #4285F4;
+  color: #FFFFFF;
+}
+
+/* Basic FullCalendar styles to ensure visibility */
+.fc {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.fc table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.fc th, 
+.fc td {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ddd;
+  padding: 0;
+  vertical-align: top;
+}
+
+/* Event styles */
+.google-calendar-events {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+}
+
+/* Make sure events are visible */
+.fc-event {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  margin: 1px 0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+/* Time grid slots */
+.fc-timegrid-slot {
+  height: 2.5em;
+}
+
+/* Today highlight */
+.fc-day-today {
+  background: rgba(66, 133, 244, 0.1);
+}
+
+/* Header and toolbar */
+.fc-toolbar-title {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.fc-col-header-cell {
+  padding: 5px 0;
+  font-weight: bold;
+}
+
+/* Now indicator */
+.fc-timegrid-now-indicator-line {
+  border-color: #ea4335;
+  border-width: 2px;
+}
+
+/* FullCalendar base styles */
+.fc {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+/* Table styles */
+.fc table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.fc th, 
+.fc td {
+  border-style: solid;
+  border-width: 1px;
+  vertical-align: top;
+}
+
+/* Event styles */
+.fc-event {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  margin: 1px 0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.fc-event:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-calendar-events {
+  background-color: #4285F4;
+  border-color: #4285F4;
+  color: white;
+}
+
+/* Day grid styling */
+.fc-daygrid-day {
+  height: 8rem;
+}
+
+.fc-col-header-cell {
+  padding: 8px 0;
+  font-weight: bold;
+  background-color: #f9fafb;
+}
+
+.fc-day-today {
+  background-color: rgba(66, 133, 244, 0.05) !important;
+}
+
+/* Time grid styling */
+.fc-timegrid-slot {
+  height: 2.5rem;
+}
+
+.fc-timegrid-now-indicator-line {
+  border-color: #ea4335;
+  border-width: 2px;
+}
+
+/* List view styling */
+.fc-list-day-cushion {
+  background-color: #f9fafb;
+}
+
+.fc-list-event:hover td {
+  background-color: rgba(66, 133, 244, 0.1);
+}
+
+/* Dark mode support */
+.dark .fc-col-header-cell {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .fc-day-today {
+  background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .fc-daygrid-day {
+    height: 6rem;
+  }
+  
+  .fc-timegrid-slot {
+    height: 2rem;
+  }
+}
+
+/* Calendar container styles */
+.calendar-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* FullCalendar base styles */
+.fc {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+/* Table styles */
+.fc table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.fc th, 
+.fc td {
+  border-style: solid;
+  border-width: 1px;
+  vertical-align: top;
+}
+
+/* Event styles */
+.fc-event {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  margin: 1px 0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.fc-event:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-calendar-events,
+.google-calendar-primary {
+  background-color: #4285F4;
+  border-color: #4285F4;
+  color: white;
+}
+
+/* Multi-calendar colors */
+/* These are some default colors that will be applied if calendar-specific colors aren't set */
+.google-calendar-events:nth-of-type(2n) {
+  background-color: #0F9D58;
+  border-color: #0F9D58;
+}
+
+.google-calendar-events:nth-of-type(3n) {
+  background-color: #DB4437;
+  border-color: #DB4437;
+}
+
+.google-calendar-events:nth-of-type(4n) {
+  background-color: #F4B400;
+  border-color: #F4B400;
+}
+
+.google-calendar-events:nth-of-type(5n) {
+  background-color: #9C27B0;
+  border-color: #9C27B0;
+}
+
+/* Day grid styling */
+.fc-daygrid-day {
+  height: 8rem;
+}
+
+.fc-col-header-cell {
+  padding: 8px 0;
+  font-weight: bold;
+  background-color: #f9fafb;
+}
+
+.fc-day-today {
+  background-color: rgba(66, 133, 244, 0.05) !important;
+}
+
+/* Time grid styling */
+.fc-timegrid-slot {
+  height: 2.5rem;
+}
+
+.fc-timegrid-now-indicator-line {
+  border-color: #ea4335;
+  border-width: 2px;
+}
+
+/* List view styling for year view */
+.fc-list-day-cushion {
+  background-color: #f9fafb;
+  padding: 8px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.fc-list-event {
+  cursor: pointer;
+  border-radius: 0;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.fc-list-event:hover td {
+  background-color: rgba(66, 133, 244, 0.1);
+}
+
+.fc-list-event-title {
+  font-weight: 500;
+}
+
+.fc-list-event-time {
+  font-weight: normal;
+  color: #666;
+  white-space: nowrap;
+}
+
+.fc-list-empty {
+  background-color: transparent;
+  padding: 16px;
+  text-align: center;
+  color: #666;
+}
+
+/* More events popover */
+.fc-more-popover {
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+.fc-more-popover .fc-popover-title {
+  padding: 8px;
+  background: #f9fafb;
+  font-weight: bold;
+}
+
+.fc-more-popover .fc-popover-body {
+  padding: 8px;
+}
+
+/* Dark mode support */
+.dark .fc-col-header-cell {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .fc-day-today {
+  background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+.dark .fc-list-day-cushion {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .fc-list-event {
+  border-bottom-color: #2d3748;
+}
+
+.dark .fc-list-event-time {
+  color: #aaa;
+}
+
+.dark .fc-list-empty {
+  color: #aaa;
+}
+
+.dark .fc-more-popover {
+  background-color: #1e293b;
+  border-color: #2d3748;
+}
+
+.dark .fc-more-popover .fc-popover-title {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}
+
+/* Make sure the view container takes full height */
+.fc-view-harness {
+  height: 100% !important;
+}
+
+/* Ensure list view scrolls correctly */
+.fc-list {
+  height: 100%;
+  overflow-y: auto !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .fc-daygrid-day {
+    height: 6rem;
+  }
+  
+  .fc-timegrid-slot {
+    height: 2rem;
+  }
+
+  .fc-list-event-time {
+    width: 30%;
+  }
+}
+
+/* Calendar container styles */
+.calendar-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* FullCalendar base styles */
+.fc {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+/* Table styles */
+.fc table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.fc th, 
+.fc td {
+  border-style: solid;
+  border-width: 1px;
+  vertical-align: top;
+}
+
+/* Event styles */
+.fc-event {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  margin: 1px 0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.fc-event:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-calendar-events,
+.google-calendar-primary {
+  background-color: #4285F4;
+  border-color: #4285F4;
+  color: white;
+}
+
+/* Day grid styling */
+.fc-daygrid-day {
+  height: 8rem;
+}
+
+.fc-col-header-cell {
+  padding: 8px 0;
+  font-weight: bold;
+  background-color: #f9fafb;
+}
+
+.fc-day-today {
+  background-color: rgba(66, 133, 244, 0.05) !important;
+}
+
+/* Time grid styling */
+.fc-timegrid-slot {
+  height: 2.5rem;
+}
+
+.fc-timegrid-now-indicator-line {
+  border-color: #ea4335;
+  border-width: 2px;
+}
+
+/* List view styling */
+.fc-list-day-cushion {
+  background-color: #f9fafb;
+  padding: 8px;
+}
+
+.fc-list-event {
+  cursor: pointer;
+  border-radius: 0;
+  padding: 4px 0;
+}
+
+.fc-list-event:hover td {
+  background-color: rgba(66, 133, 244, 0.1);
+}
+
+.fc-list-event-title {
+  font-weight: 500;
+}
+
+.fc-list-event-time {
+  font-weight: normal;
+  color: #666;
+}
+
+.fc-list-empty {
+  background-color: transparent;
+  padding: 16px;
+  text-align: center;
+  color: #666;
+}
+
+/* Dark mode support */
+.dark .fc-col-header-cell {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .fc-day-today {
+  background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+.dark .fc-list-day-cushion {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .fc-list-event {
+  border-bottom-color: #333;
+}
+
+.dark .fc-list-event-time {
+  color: #aaa;
+}
+
+.dark .fc-list-empty {
+  color: #aaa;
+}
+
+/* Make sure the view container takes full height */
+.fc-view-harness {
+  height: 100% !important;
+}
+
+/* Ensure list view scrolls correctly */
+.fc-list {
+  height: 100%;
+  overflow-y: auto !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .fc-daygrid-day {
+    height: 6rem;
+  }
+  
+  .fc-timegrid-slot {
+    height: 2rem;
+  }
+}
+
+/* Main calendar container - prevent scrolling on the outer container */
+.calendar-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* FullCalendar base styles */
+.fc {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+/* Dark mode base styles */
+.dark .fc,
+.dark-theme {
+  background-color: #1a1a1a;
+  color: #e2e8f0;
+}
+
+/* Table styles */
+.fc table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.fc th, 
+.fc td {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ddd;
+  padding: 0;
+  vertical-align: top;
+}
+
+.dark .fc th, 
+.dark .fc td,
+.dark-theme th,
+.dark-theme td {
+  border-color: #333;
+}
+
+/* Month view for horizontal scrolling, not vertical */
+.fc-dayGridMonth-view {
+  overflow-y: hidden !important;
+}
+
+/* Today's date highlight - make it very clear */
+.fc-day-today {
+  background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+.fc-daygrid-day.fc-day-today {
+  background-color: rgba(66, 133, 244, 0.1) !important;
+  font-weight: bold;
+}
+
+.fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  color: #1967d2;
+  font-weight: bold;
+  background-color: rgba(66, 133, 244, 0.2);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px;
+}
+
+.dark .fc-day-today,
+.dark-theme .fc-day-today {
+  background-color: rgba(66, 133, 244, 0.15) !important;
+}
+
+.dark .fc-daygrid-day.fc-day-today .fc-daygrid-day-number,
+.dark-theme .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  color: #8ab4f8;
+  background-color: rgba(138, 180, 248, 0.2);
+}
+
+/* Event styles */
+.fc-event {
+  margin: 1px 0;
+  border: none;
+  border-radius: 3px;
+  padding: 1px 3px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.fc-event:hover,
+.event-with-hover:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.dark .fc-event:hover,
+.dark .event-with-hover:hover,
+.dark-theme .fc-event:hover,
+.dark-theme .event-with-hover:hover {
+  filter: brightness(1.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode specific event styles */
+.dark-event {
+  /* Make sure text is always visible in dark mode */
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Header and column styles */
+.fc-col-header-cell {
+  padding: 8px 0;
+  font-weight: bold;
+  background-color: #f8f9fa;
+  border-color: #ddd;
+}
+
+.dark .fc-col-header-cell,
+.dark-theme .fc-col-header-cell {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+/* Day grid styling */
+.fc-daygrid-day {
+  height: auto;
+}
+
+.fc-daygrid-day-frame {
+  min-height: 100px;
+}
+
+/* Hide out-of-month dates for cleaner interface */
+.fc-day-other {
+  background-color: #f8f9fa;
+  opacity: 0.5;
+}
+
+.dark .fc-day-other,
+.dark-theme .fc-day-other {
+  background-color: #2d3748;
+  opacity: 0.5;
+}
+
+/* Time grid styling */
+.fc-timegrid-slot {
+  height: 2.5rem;
+  border-color: #eee;
+}
+
+.dark .fc-timegrid-slot,
+.dark-theme .fc-timegrid-slot {
+  border-color: #333;
+}
+
+.fc-timegrid-now-indicator-line {
+  border-color: #ea4335;
+  border-width: 2px;
+}
+
+.dark .fc-timegrid-now-indicator-line,
+.dark-theme .fc-timegrid-now-indicator-line {
+  border-color: #ff6b6b;
+}
+
+/* Schedule View (List) styling - remove all these */
+.fc-list-view,
+.fc-list-table,
+.fc-list-day,
+.fc-list-day th,
+.fc-list-day-cushion,
+.fc-list-event,
+.fc-list-event td,
+.fc-list-event-title,
+.fc-list-event-graphic,
+.fc-list-event-dot,
+.fc-list-event-time,
+.fc-list-event-time:empty:before,
+.fc-list-grid-layout,
+.fc-list-day-with-date,
+.fc-list-day-with-date:before,
+.dark .fc-list-event,
+.dark .fc-list-day-cushion,
+.dark .fc-list-day-text,
+.dark .fc-list-day-side-text,
+.dark .fc-list-event-time,
+.dark .fc-list-event-title,
+.dark .fc-list-event:hover td,
+.dark .fc-list-day-with-date:before,
+.dark .fc-list-event-time:empty:before,
+.dark .fc-list-empty,
+.fc-list-view .fc-scroller {
+  display: none !important; /* Hide everything related to list view */
+}
+
+/* Keep other styles like dark mode and general calendar styles */
+
+/* Schedule View (List) styling */
+.fc-list-view {
+  border: none !important;
+  background: transparent !important;
+}
+
+.fc-list-table {
+  border: none !important;
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+/* Reset all fullcalendar list styles to build up from scratch */
+.fc-list-view,
+.fc-list-table,
+.fc-list-day,
+.fc-list-day-cushion,
+.fc-list-event,
+.fc-list-event td {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Table structure */
+.fc-list-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+/* Hide the default date headers completely */
+.fc-list-day {
+  display: none !important;
+}
+
+/* Custom date display for first event of the day */
+.fc-list-event.first-event .fc-list-event-graphic:before {
+  content: attr(data-date) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  background-color: #fff !important;
+  color: #202124 !important;
+  border-radius: 50% !important;
+  font-weight: 500 !important;
+  border: 1px solid #dadce0 !important;
+  margin-right: 12px !important;
+  position: absolute !important;
+  left: -54px !important;
+}
+
+.dark .fc-list-event.first-event .fc-list-event-graphic:before {
+  background-color: #2d3748 !important;
+  color: #e2e8f0 !important;
+  border-color: #4a5568 !important;
+}
+
+/* First event of the day should have date info */
+.fc-list-event.first-event {
+  margin-top: 18px !important;
+  position: relative !important;
+}
+
+/* Row structure */
+.fc-list-event {
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  margin-left: 48px !important;
+  min-height: 40px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.dark .fc-list-event {
+  border-bottom: 1px solid #2a2a2a !important;
+}
+
+/* Time column */
+.fc-list-event-time {
+  min-width: 130px !important;
+  width: 130px !important;
+  text-align: right !important;
+  padding-right: 16px !important;
+  color: #5f6368 !important;
+  font-size: 0.875rem !important;
+  letter-spacing: 0.2px !important;
+}
+
+.dark .fc-list-event-time {
+  color: #a0aec0 !important;
+}
+
+/* Dot column */
+.fc-list-event-graphic {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.fc-list-event-dot {
+  border-width: 5px !important;
+  margin: 0 8px 0 0 !important;
+}
+
+/* Title column */
+.fc-list-event-title {
+  font-weight: 500 !important;
+  color: #202124 !important;
+  font-size: 0.9375rem !important;
+  flex-grow: 1 !important;
+}
+
+.dark .fc-list-event-title {
+  color: #e2e8f0 !important;
+}
+
+/* All-day text */
+.fc-list-event-time:empty:before,
+.fc-list-event-time.all-day:before {
+  content: "all-day" !important;
+  color: #5f6368 !important;
+  display: inline-block !important;
+  width: 100% !important;
+  text-align: right !important;
+}
+
+.dark .fc-list-event-time:empty:before,
+.dark .fc-list-event-time.all-day:before {
+  color: #a0aec0 !important;
+}
+
+/* Day number styles */
+.fc-list-event .day-number {
+  position: absolute !important;
+  width: 36px !important;
+  height: 36px !important;
+  left: -44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  background: white !important;
+  border: 1px solid #dadce0 !important;
+  color: #202124 !important;
+  font-weight: 500 !important;
+  z-index: 5 !important;
+}
+
+.dark .fc-list-event .day-number {
+  background: #2d3748 !important;
+  color: #e2e8f0 !important;
+  border-color: #4a5568 !important;
+}
+
+/* Day info styles */
+.fc-list-event .day-info {
+  position: absolute !important;
+  left: 24px !important;
+  top: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  color: #202124 !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+}
+
+.dark .fc-list-event .day-info {
+  color: #e2e8f0 !important;
+}
+
+/* Day month styles */
+.fc-list-event .day-month {
+  color: #5f6368 !important;
+  font-weight: normal !important;
+  font-size: 0.875rem !important;
+  margin-left: 6px !important;
+}
+
+.dark .fc-list-event .day-month {
+  color: #a0aec0 !important;
+}
+
+/* Hover effect */
+.fc-list-event:hover {
+  background-color: rgba(66, 133, 244, 0.04) !important;
+}
+
+.dark .fc-list-event:hover {
+  background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .fc-list-event {
+    margin-left: 44px !important;
+  }
+  
+  .fc-list-event-time {
+    width: 110px !important;
+    min-width: 110px !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .fc-list-event .day-number {
+    width: 32px !important;
+    height: 32px !important;
+    left: -40px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  .fc-list-event-title {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* Adjust time field position in first event rows */
+.fc-list-event.first-event .fc-list-event-time {
+  margin-top: 24px !important;
+}
+
+/* Adjust graphic position in first event rows */
+.fc-list-event.first-event .fc-list-event-graphic {
+  margin-top: 24px !important;
+}
+
+/* Adjust title position in first event rows */
+.fc-list-event.first-event .fc-list-event-title {
+  margin-top: 24px !important;
+}
+
+/* Make list view take full height */
+.fc-list-view-harness {
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.fc-list-view-harness .fc-list-view {
+  height: 100% !important;
+}
+
+.fc-list-view-harness .fc-scroller {
+  height: 100% !important;
+  overflow-y: auto !important;
+} 
