@@ -96,7 +96,6 @@ class CRUDManifestation:
 # --- Test Functions ---
 import os
 import asyncio
-import pytest # Import pytest for fail
 from dotenv import load_dotenv
 from uuid import UUID as _UUID
 from app.database.database import AsyncSessionLocal
@@ -141,7 +140,7 @@ async def test_crud_manifestation(db, user_id):
         created_id = created.id
         print(f"✅ Created manifestation with ID: {created.id}")
     except HTTPException as e:
-        pytest.fail(f"Create failed: {e.detail}")
+        raise RuntimeError(f"Create failed: {e.detail}")
     
     # Test Get
     fetched = await crud.get(id=created_id, user_id=user_id)
@@ -171,7 +170,7 @@ async def test_crud_manifestation(db, user_id):
         assert updated.courage_list == [], "Failed to update courage_list"
         print(f"✅ Updated manifestation with ID: {updated.id}")
     except HTTPException as e:
-        pytest.fail(f"Update failed: {e.detail}")
+        raise RuntimeError(f"Update failed: {e.detail}")
 
     # Test Update specific fields to None (if applicable)
     update_to_none = ManifestationUpdate(year=None, theme=None)
@@ -181,7 +180,7 @@ async def test_crud_manifestation(db, user_id):
         assert updated_none.theme is None, "Failed to set theme to None"
         print(f"✅ Set year/theme to None for ID: {updated_none.id}")
     except HTTPException as e:
-         pytest.fail(f"Update to None failed: {e.detail}")
+         raise RuntimeError(f"Update to None failed: {e.detail}")
 
     # Test Remove
     try:
@@ -189,7 +188,7 @@ async def test_crud_manifestation(db, user_id):
         assert removed is not None, "Failed to remove manifestation"
         print(f"✅ Removed manifestation with ID: {removed.id}")
     except HTTPException as e:
-         pytest.fail(f"Remove failed: {e.detail}")
+         raise RuntimeError(f"Remove failed: {e.detail}")
     
     # Verify removal
     fetched_after_remove = await crud.get(id=created_id, user_id=user_id)

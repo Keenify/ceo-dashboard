@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
 from typing import List, Dict, Any
 import logging
-from app.service.stripe_modules import StripeModuleService
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -31,7 +30,8 @@ class CustomerModulesResponse(BaseModel):
     modules: List[Dict[str, Any]]
 
 # Dependency to get Stripe service
-def get_stripe_service() -> StripeModuleService:
+def get_stripe_service():
+    from app.service.stripe_modules import StripeModuleService
     try:
         service = StripeModuleService()
         return service
@@ -42,7 +42,7 @@ def get_stripe_service() -> StripeModuleService:
 @router.post("/customer-info", response_model=CustomerInfoResponse)
 async def get_customer_info(
     request: CustomerEmailRequest,
-    stripe_service: StripeModuleService = Depends(get_stripe_service)
+    stripe_service = Depends(get_stripe_service)
 ):
     """
     Get customer information by email
@@ -62,7 +62,7 @@ async def get_customer_info(
 @router.post("/customer-modules", response_model=CustomerModulesResponse)
 async def get_customer_modules(
     request: CustomerEmailRequest,
-    stripe_service: StripeModuleService = Depends(get_stripe_service)
+    stripe_service = Depends(get_stripe_service)
 ):
     """
     Get all modules (subscriptions) for a customer by email

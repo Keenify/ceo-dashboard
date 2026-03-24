@@ -16,7 +16,6 @@ from app.service.habit_buddies_email_manager import HabitBuddiesEmailManager
 from app.service.payment_reminders_email_manager import PaymentRemindersEmailManager
 from app.service.whatsapp_service import WhatsAppService
 from app.service.taiga_sync_service import TaigaSyncService
-from app.rag.services.modules.weekly_design_manager import WeeklyDesignRAGManager
 import asyncio
 import logging
 from datetime import datetime, date, timedelta
@@ -534,8 +533,9 @@ async def refresh_weekly_design_embeddings():
     """Refresh RAG embeddings for all users' weekly designs (runs every 6 hours)"""
     try:
         logging.info("[Scheduler] Starting to refresh weekly design embeddings...")
-        
+
         # Initialize RAG manager
+        from app.rag.services.modules.weekly_design_manager import WeeklyDesignRAGManager
         rag_manager = WeeklyDesignRAGManager()
         
         # Refresh embeddings for all users
@@ -559,26 +559,26 @@ scheduler.add_job(
     name="Sync feedback to Taiga every 2 minutes"
 )
 
-# Schedule deletion check to run every 5 seconds
+# Schedule deletion check to run every 60 seconds
 scheduler.add_job(
     check_taiga_deleted_stories,
     'interval',
-    seconds=5,
+    seconds=60,
     id='check_taiga_deleted_stories',
     replace_existing=True,
-    max_instances=1,  # Prevent overlapping if check takes longer than 5s
-    name="Check for deleted Taiga stories every 5 seconds"
+    max_instances=1,
+    name="Check for deleted Taiga stories every 60 seconds"
 )
 
-# Schedule weekly design RAG embeddings refresh to run every 2 minutes
+# Schedule weekly design RAG embeddings refresh to run every 6 hours
 scheduler.add_job(
     refresh_weekly_design_embeddings,
     'interval',
-    minutes=2,
+    hours=6,
     id='refresh_weekly_design_embeddings',
-    name="Refresh weekly design RAG embeddings every 2 minutes",
+    name="Refresh weekly design RAG embeddings every 6 hours",
     timezone=pytz.timezone('Asia/Singapore'),
-    misfire_grace_time=120  # 2 minute grace period
+    misfire_grace_time=600
 )
 
 def start_scheduler():

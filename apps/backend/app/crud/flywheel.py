@@ -144,7 +144,7 @@ async def test_crud_flywheel(db: AsyncSession, user_id: UUID):
         print(f"✅ Created: {created.id} with image_path: {created.image_path}") # Updated print
     except HTTPException as e:
         print(f"❌ Error creating: {e.detail}")
-        pytest.fail(f"CRUD create failed: {e.detail}")
+        raise RuntimeError(f"CRUD create failed: {e.detail}")
         return
 
     # --- Get ---
@@ -175,7 +175,7 @@ async def test_crud_flywheel(db: AsyncSession, user_id: UUID):
         print(f"✅ Updated: {updated.id} with image_path: {updated.image_path}") # Updated print
     except HTTPException as e:
         print(f"❌ Error updating: {e.detail}")
-        pytest.fail(f"CRUD update failed: {e.detail}")
+        raise RuntimeError(f"CRUD update failed: {e.detail}")
 
     # --- Update image_path to None ---
     update_none_data = FlywheelUpdate(image_path=None) # Renamed image_url to image_path
@@ -185,7 +185,7 @@ async def test_crud_flywheel(db: AsyncSession, user_id: UUID):
         print(f"✅ Set image_path to None for ID: {updated_none.id}") # Updated print
     except HTTPException as e:
         print(f"❌ Error setting image_path to None: {e.detail}") # Updated print
-        pytest.fail(f"CRUD update to None failed: {e.detail}")
+        raise RuntimeError(f"CRUD update to None failed: {e.detail}")
 
     # --- Remove ---
     try:
@@ -195,7 +195,7 @@ async def test_crud_flywheel(db: AsyncSession, user_id: UUID):
         print(f"✅ Removed: {removed.id}")
     except HTTPException as e:
         print(f"❌ Error removing: {e.detail}")
-        pytest.fail(f"CRUD remove failed: {e.detail}")
+        raise RuntimeError(f"CRUD remove failed: {e.detail}")
 
     # --- Verify removal --- 
     fetched_after_remove = await crud.get(id=created_id, user_id=user_id)
@@ -235,7 +235,6 @@ async def main():
     print("\n🏁 All Flywheel CRUD tests completed.")
 
 if __name__ == "__main__":
-    import pytest # Import pytest for fail
     try:
         asyncio.run(main())
     except RuntimeError as e:

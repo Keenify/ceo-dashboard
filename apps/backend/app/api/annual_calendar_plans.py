@@ -14,8 +14,6 @@ from app.schemas.annual_calendar_plans import (
     AnnualCalendarPlanFilter,
     AnnualCalendarPlanColorUpdate
 )
-from app.service.annual_calendar_pdf_service import generate_annual_calendar_pdf
-
 router = APIRouter()
 
 # ================================
@@ -51,6 +49,7 @@ async def export_annual_calendar_pdf(
         if isinstance(p.get("end_date"), date):
             p["end_date"] = p["end_date"].isoformat()
 
+    from app.service.annual_calendar_pdf_service import generate_annual_calendar_pdf
     pdf_buffer = generate_annual_calendar_pdf(plans_data, resolved_year)
     filename = f"annual_calendar_{resolved_year}.pdf"
     return StreamingResponse(

@@ -109,7 +109,6 @@ class CRUDUserModules:
 # --- Test Functions ---
 import os
 import asyncio
-import pytest
 from dotenv import load_dotenv
 from uuid import UUID as _UUID
 from app.database.database import AsyncSessionLocal
@@ -153,7 +152,7 @@ async def test_crud_user_modules(db, user_id):
         created_id = created.id
         print(f"✅ Created user modules with ID: {created.id}")
     except HTTPException as e:
-        pytest.fail(f"Create failed: {e.detail}")
+        raise RuntimeError(f"Create failed: {e.detail}")
     
     # Test Get by ID
     fetched = await crud.get(id=created_id, user_id=user_id)

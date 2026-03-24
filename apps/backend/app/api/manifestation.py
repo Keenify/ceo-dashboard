@@ -9,7 +9,6 @@ from app.schemas.manifestation import (
     ManifestationCreate, ManifestationUpdate, ManifestationResponse
 )
 from app.crud.manifestation import CRUDManifestation
-from app.service.manifestation_pdf_service import generate_manifestation_pdf
 
 router = APIRouter()
 
@@ -50,6 +49,7 @@ async def export_manifestation_pdf(
 
     m = manifestations[0]
     data = ManifestationResponse.model_validate(m).model_dump()
+    from app.service.manifestation_pdf_service import generate_manifestation_pdf
     pdf_buffer = generate_manifestation_pdf(data, category)
 
     year = data.get("year", "")
