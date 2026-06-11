@@ -162,10 +162,28 @@ class CRUDHabitEntry:
         self.db = db
         self._crud_streak = CRUDHabitStreak(db)
 
+    async def get_by_habit_and_date(self, *, habit_id: UUID, entry_date: date) -> Optional[HabitEntry]:
+        """Retrieves a HabitEntry by habit_id and entry_date."""
+        result = await self.db.execute(
+            select(HabitEntry).filter(
+                HabitEntry.habit_id == habit_id,
+                HabitEntry.entry_date == entry_date
+            )
+        )
+        return result.scalars().first()
+
     async def create(self, *, obj_in: HabitEntryCreate) -> HabitEntry:
-        """Creates a new HabitEntry and updates the streak."""
-        db_obj = HabitEntry(**obj_in.model_dump())
-        habit_id = db_obj.habit_id
+        """Creates a new HabitEntry, or updates the existing one for that date (upsert)."""
+        data = obj_in.model_dump()
+        habit_id = data["habit_id"]
+        entry_date = data["entry_date"]
+
+        existing = await self.get_by_habit_and_date(habit_id=habit_id, entry_date=entry_date)
+        if existing:
+            update_fields = {k: v for k, v in data.items() if k not in ("habit_id", "entry_date")}
+            return await self.update(db_obj=existing, obj_in=update_fields)
+
+        db_obj = HabitEntry(**data)
         self.db.add(db_obj)
         try:
             await self.db.commit()

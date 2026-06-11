@@ -1,4 +1,4 @@
-.PHONY: dev-frontend dev-backend install-frontend install-backend install
+.PHONY: dev-frontend dev-backend install-frontend install-backend install dev-env
 
 # Frontend
 dev-frontend:
@@ -9,14 +9,29 @@ install-frontend:
 
 # Backend
 dev-backend:
-	cd apps/backend && source ../../ceo-backend/.venv/bin/activate && uvicorn app.main:app --reload --port 8000
+	cd apps/backend && uvicorn app.main:app --reload --port 8001
 
 install-backend:
-	cd apps/backend && pip install -r requirements.txt
+	pip3 install -r apps/backend/requirements.txt
 
 # Install all
 install: install-frontend install-backend
 
+# Create env files from examples (skips if already exists)
+dev-env:
+	@if [ ! -f apps/frontend/.env.local ]; then \
+		cp apps/frontend/.env.local.example apps/frontend/.env.local; \
+		echo "Created apps/frontend/.env.local — fill in your values"; \
+	else \
+		echo "apps/frontend/.env.local already exists, skipping"; \
+	fi
+	@if [ ! -f apps/backend/.env ]; then \
+		cp apps/backend/.env.example apps/backend/.env; \
+		echo "Created apps/backend/.env — fill in your values"; \
+	else \
+		echo "apps/backend/.env already exists, skipping"; \
+	fi
+
 # Run both concurrently
 dev:
-	@(cd apps/frontend && yarn dev) & (cd apps/backend && source .venv/bin/activate && uvicorn app.main:app --reload --port 8000) & wait
+	@(cd apps/frontend && yarn dev) & (cd apps/backend && uvicorn app.main:app --reload --port 8001) & wait
