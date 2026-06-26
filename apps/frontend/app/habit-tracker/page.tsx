@@ -15,7 +15,9 @@ import { HabitBuddyManager } from '../../components/habit-tracker/HabitBuddyMana
 import { toast } from 'sonner';
 import HabitDetailChart from '@/components/habit-tracker/HabitDetailChart';
 import HabitNotesSection from '@/components/habit-tracker/HabitNotesSection';
+import HabitYearOverview from '@/components/habit-tracker/HabitYearOverview';
 import { Loader2 } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type HabitEntriesState = Record<string, Record<string, HabitEntryResponse>>;
 type HabitStreaksState = Record<string, HabitStreakResponse>;
@@ -59,6 +61,7 @@ export default function HabitTrackerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedHabit, setSelectedHabit] = useState<FetchedHabit | undefined>(undefined);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'year'>('grid');
   const [selectedChartHabit, setSelectedChartHabit] = useState<FetchedHabit | null>(null);
   const [chartEntriesData, setChartEntriesData] = useState<HabitEntryResponse[]>([]);
   const [isChartLoading, setIsChartLoading] = useState<boolean>(false);
@@ -631,8 +634,20 @@ export default function HabitTrackerPage() {
       <div className="w-full max-w-[calc(100vw-2rem)]">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-4xl font-bold">Habit Tracker</h1>
-          {user?.id && <HabitBuddyManager userId={user.id} />}
+          <div className="flex items-center gap-4">
+            <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as 'grid' | 'year')}>
+              <TabsList>
+                <TabsTrigger value="grid">21-day grid</TabsTrigger>
+                <TabsTrigger value="year">Year overview</TabsTrigger>
+              </TabsList>
+            </Tabs>
+            {user?.id && <HabitBuddyManager userId={user.id} />}
+          </div>
         </div>
+        {viewMode === 'year' && (
+          <HabitYearOverview habits={habits} streaks={streaks} />
+        )}
+        {viewMode === 'grid' && (<>
         <HabitTable
           habits={habits}
           dates={visibleDates}
@@ -729,6 +744,7 @@ export default function HabitTrackerPage() {
             </div>
           </div>
         )}
+        </>)}
       </div>
       <HabitModal
         isOpen={isModalOpen}

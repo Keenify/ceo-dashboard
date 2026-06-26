@@ -1,5 +1,6 @@
 import asyncio
 import os
+from uuid import uuid4
 from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.pool import NullPool
@@ -20,11 +21,22 @@ if not DATABASE_URL.startswith("postgresql+asyncpg"):
 
 # print(f"🔑 Using DATABASE_URL: {DATABASE_URL}")
 
-# Create async engine with connection pooling configuration
+# Create async engine with connection pooling configuration.
+# The three connect_args below are required when DATABASE_URL routes through
+# a pgbouncer transaction pooler (e.g. Supabase port 6543):
+#   statement_cache_size=0           — disables asyncpg's own PS cache
+#   prepared_statement_cache_size=0  — disables SQLAlchemy's dialect-level PS cache
+#   prepared_statement_name_func     — gives every prepared statement a globally-unique
+#                                      name so concurrent connections never collide,
+#                                      fixing DuplicatePreparedStatementError.
 engine = create_async_engine(
     DATABASE_URL,
     poolclass=NullPool,
-    connect_args={"statement_cache_size": 0},
+    connect_args={
+        "statement_cache_size": 0,
+        "prepared_statement_cache_size": 0,
+        "prepared_statement_name_func": lambda: f"__asyncpg_{uuid4()}__",
+    },
 )
 
 # Create session factory

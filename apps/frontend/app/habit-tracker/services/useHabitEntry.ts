@@ -85,11 +85,13 @@ export function useHabitEntries() {
   );
 
   const fetchHabitEntries = useCallback(
-    async (habitId: string, startDate: string, endDate: string): Promise<HabitEntryResponse[] | null> => {
+    async (habitId: string, startDate: string, endDate: string, limit?: number, skip?: number): Promise<HabitEntryResponse[] | null> => {
       setLoading(true);
       setError(null);
       try {
-        const url = `${getEntriesUrl(habitId)}?start_date=${startDate}&end_date=${endDate}`;
+        let url = `${getEntriesUrl(habitId)}?start_date=${startDate}&end_date=${endDate}`;
+        if (limit !== undefined) url += `&limit=${limit}`;
+        if (skip !== undefined) url += `&skip=${skip}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
